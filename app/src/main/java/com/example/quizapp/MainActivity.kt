@@ -1,6 +1,7 @@
 package com.example.quizapp
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     fun showNextQuiz() {
         //カウントラベルの更新
         binding.countLabel.text = getString(R.string.count_label,quizCount)
-        
+
         // クイズを1問取り出す
         val quiz = quizData[0]
 
@@ -100,6 +101,15 @@ class MainActivity : AppCompatActivity() {
 
     //出題数をcheckする
     fun checkQuizCount(){
-    }
+        if(quizCount == QUIZ_COUNT) {
+            //結果画面を表示
+            val intent = Intent(this@MainActivity,ResultActivity::class.java)
+            intent.putExtra("RIGHT_ANSWER_COUNT", rightAnswerCount)
+            startActivity(intent)
 
+        } else {
+            quizCount++
+            showNextQuiz()
+        }
+    }
 }
